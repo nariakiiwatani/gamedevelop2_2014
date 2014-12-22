@@ -23,4 +23,7 @@ private:
 	ofxSlider<int> offset_[CHANNEL_NUM];
 	ofxSlider<int> value_[CHANNEL_NUM];
 	ofxSlider<int> input_[CHANNEL_NUM];
+	ofxToggle noise_;
+	float noise_seed_[CHANNEL_NUM];
+	void refreshSeed(bool &val);
 };

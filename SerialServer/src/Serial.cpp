@@ -21,6 +21,7 @@ Serial::Serial()
 	for(int i = 0; i < CHANNEL_NUM; ++i) {
 		input_panel_.add(input_[i].setup("value"+ofToString(i), 0, 0, 255, w, h));
 	}
+	input_panel_.add(noise_.setup("make some noise", false));
 	x += w+dx;
 	offset_panel_.setup("offset", "offset.xml", x, y);
 	offset_panel_.setSize(w, h);
@@ -31,7 +32,7 @@ Serial::Serial()
 	scaler_panel_.setup("scaler", "scaler.xml", x, y);
 	scaler_panel_.setSize(w, h);
 	for(int i = 0; i < CHANNEL_NUM; ++i) {
-		scaler_panel_.add(scaler_[i].setup("value"+ofToString(i), 1.f, 0.f, 5.f, w, h));
+		scaler_panel_.add(scaler_[i].setup("value"+ofToString(i), 1.f, -5.f, 5.f, w, h));
 	}
 	x += w+dx;
 	value_panel_.setup("output", "output.xml", x, y);
@@ -39,6 +40,8 @@ Serial::Serial()
 	for(int i = 0; i < CHANNEL_NUM; ++i) {
 		value_panel_.add(value_[i].setup("value"+ofToString(i), 0, 0, 255, w, h));
 	}
+	
+	noise_.addListener(this, &Serial::refreshSeed);
 	
 	offset_panel_.loadFromFile("offset.xml");
 	scaler_panel_.loadFromFile("scaler.xml");
@@ -67,6 +70,16 @@ void Serial::setup()
 		ofBufferToFile(filename, file);
 	}
 }
+
+void Serial::refreshSeed(bool &val)
+{
+	if(val) {
+		for(int i = 0; i < CHANNEL_NUM; ++i) {
+			noise_seed_[i] = ofRandom(1);
+		}
+	}
+}
+
 void Serial::close()
 {
 	serial_.close();
@@ -87,7 +100,7 @@ void Serial::update()
 		}
 	}
 	for(int i = 0; i < CHANNEL_NUM; ++i) {
-		value_[i] = (input_[i]+offset_[i])*scaler_[i];
+		value_[i] = noise_?ofNoise(noise_seed_[i], pow(noise_seed_[i]/3.f,3)*ofGetFrameNum())*256:(input_[i]+offset_[i])*scaler_[i];
 	}
 }
 void Serial::draw()
