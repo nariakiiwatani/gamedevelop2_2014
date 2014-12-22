@@ -20,24 +20,24 @@ void ofApp::draw(){
 	int dy = 10;
 	ofDrawBitmapString("int", x, y);
 	y += dy;
-	for(int i = 0; i < receiver_.size(); ++i) {
-		ofDrawBitmapString(ofToString(receiver_.getInt(i)), x, y);
+	for(int i = 0; i < receiver.size(); ++i) {
+		ofDrawBitmapString(ofToString(receiver.getInt(i)), x, y);
 		y += dy;
 	}
 	x += dx;
 	y = DEFAULT_Y;
 	ofDrawBitmapString("float", x, y);
 	y += dy;
-	for(int i = 0; i < receiver_.size(); ++i) {
-		ofDrawBitmapString(ofToString(receiver_.getFloat(i)), x, y);
+	for(int i = 0; i < receiver.size(); ++i) {
+		ofDrawBitmapString(ofToString(receiver.getFloat(i)), x, y);
 		y += dy;
 	}
 	x += dx;
 	y = DEFAULT_Y;
 	ofDrawBitmapString("bool", x, y);
 	y += dy;
-	for(int i = 0; i < receiver_.size(); ++i) {
-		ofDrawBitmapString(ofToString(receiver_.getBool(i)?"true":"false"), x, y);
+	for(int i = 0; i < receiver.size(); ++i) {
+		ofDrawBitmapString(ofToString(receiver.getBool(i)?"true":"false"), x, y);
 		y += dy;
 	}
 }

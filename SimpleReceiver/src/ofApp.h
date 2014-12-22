@@ -20,6 +20,5 @@ public:
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);
 	
-private:
-	Receiver receiver_;
+	Receiver receiver;
 };

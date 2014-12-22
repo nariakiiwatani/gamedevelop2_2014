@@ -11,7 +11,7 @@
 Receiver::Receiver()
 {
 	resize(20);
-	osc_.setup(12346);
+	osc_.setup(12345);
 	ofAddListener(ofEvents().update, this, &Receiver::update);
 }
 Receiver::~Receiver()
